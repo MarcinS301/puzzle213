@@ -18,8 +18,8 @@ namespace puzzle
         ArrayList images = new ArrayList();
         public Form1()
         {
-            Point.X = 180;
-            Point.Y = 180;
+            Point.X = 150;
+            Point.Y = 150;
 
             InitializeComponent();
         }
@@ -46,8 +46,7 @@ namespace puzzle
 
                 for (int i = 0; i < 90; i++)
                     for (int j = 0; j < 90; j++)
-                        piece.SetPixel(i, j,
-                            bmp.GetPixel(i + movr, j + movd));
+                        piece.SetPixel(i, j,bmp.GetPixel(i + movr, j + movd));
 
                 images.Add(piece);
 
@@ -68,7 +67,7 @@ namespace puzzle
             foreach (Button b in panel1.Controls)
                 b.Enabled = true;
 
-            Image orginal = Image.FromFile(@"C:\Users\Marcin\Desktop\das");
+            Image orginal = Image.FromFile(@"C:\Users\Marcin\Desktop\das\2.jpg");
 
             cropImageTomages(orginal, 300, 300);
 
@@ -78,7 +77,7 @@ namespace puzzle
         private void AddImagesToButtons(ArrayList images)
         {
             int i = 0;
-            int[] arr = { 0, 1, 2, 3, 4, 5, 6, 7 };
+            int[] arr = {0, 1, 2, 3, 4, 5, 6, 7 };
 
 
             arr = suffle(arr);
@@ -101,44 +100,42 @@ namespace puzzle
 
             return arr;
         }
-        private int[] suffle(int[] arr)
-        {
-            throw new NotImplementedException();
-        }
-    }
-       private void button9_Click(object sender, EventArgs e)
-    {
-        MoveButton((Button)sender);
-    }
 
-    private void MoveButton(Button btn)
-    {
-        if (((btn.Location.X == Point.X - 90 || btn.Location.X == Point.X + 90)
-            && btn.Location.Y == Point.Y)
-            || (btn.Location.Y == Point.Y - 90 || btn.Location.Y == Point.Y + 90)
-            && btn.Location.X == Point.X)
+        private void button9_Click(object sender, EventArgs e)
         {
-            Point swap = btn.Location;
-            btn.Location = Point;
-            Point = swap;
+            MoveButton((Button)sender);
         }
 
-        if (Point.X == 180 && Point.Y == 180)
-            CheckValid();
-    }
-
-    private void CheckValid()
-    {
-        int count = 0, index;
-        foreach (Button btn in panel1.Controls)
+        private void MoveButton(Button btn)
         {
-            index = (btn.Location.Y / 90) * 3 + btn.Location.X / 90;
-            if (images[index] == btn.Image)
-                count++;
+            if (((btn.Location.X == Point.X - 90 || btn.Location.X == Point.X + 90)
+          && btn.Location.Y == Point.Y)
+          || (btn.Location.Y == Point.Y - 90 || btn.Location.Y == Point.Y + 90)
+          && btn.Location.X == Point.X)
+            {
+                Point swap = btn.Location;
+                btn.Location = Point;
+                Point = swap;
+            }
+
+            if (Point.X == 180 && Point.Y == 180)
+                CheckValid();
         }
-        if (count == 8)
-            MessageBox.Show("well done you win!");
+
+        private void CheckValid()
+        {
+            int c = 0, index;
+            foreach (Button btn in panel1.Controls)
+            {
+                index = (btn.Location.Y / 90) * 3 + btn.Location.X / 90;
+                if (images[index] == btn.Image)
+                    c++;
+            }
+            if (c == 8)
+                MessageBox.Show("Chcialo sie panu w to grac?");
+        }
     }
+  
 
 
 
